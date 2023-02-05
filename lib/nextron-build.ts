@@ -74,6 +74,7 @@ async function build() {
 
   const distDir = nextronConfig.distDir || 'dist';
   const appSrcDir = nextronConfig.appSrcDir || 'app';
+  const rendererSrcDir = nextronConfig.rendererSrcDir || 'renderer';
 
   const appdir = path.join(cwd, appSrcDir);
   const distdir = path.join(cwd, distDir);
@@ -84,7 +85,7 @@ async function build() {
     fs.removeSync(distdir);
 
     log('Building renderer process');
-    await execa('next', ['build', path.join(appdir, 'next-server')], execaOptions);
+    await execa('next', ['build', path.join(cwd, rendererSrcDir)], execaOptions);
 
     log('Building main process');
     await execa('node', [path.join(__dirname, 'webpack.config.js')], execaOptions);
